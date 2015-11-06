@@ -5,21 +5,32 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class HybridWebActivity extends Activity {
+public class HybridWebActivity extends Activity implements OnClickListener {
 
+	Button btnWeb80;
+	Button btnWeb8080;
+	
 	WebView myweb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hybrid_web);
+		
+		btnWeb80 = (Button) findViewById(R.id.btnWeb80);
+		btnWeb8080 = (Button) findViewById(R.id.btnWeb8080);
+		btnWeb80.setOnClickListener(this);
+		btnWeb8080.setOnClickListener(this);
 		
 		myweb = (WebView) findViewById(R.id.myweb);
 		
@@ -31,9 +42,9 @@ public class HybridWebActivity extends Activity {
 		myweb.setWebViewClient(new MyWebViewClient());					// a href
 		myweb.setWebChromeClient(new WebChromeClient()); // alert()
 		
-		myweb.loadUrl("http://192.168.10.31:8080/web/index.jsp");
-//		myweb.loadUrl("http://www.soen.kr");
-//		myweb.loadUrl("http://192.168.10.31");
+//		myweb.loadUrl("http://192.168.10.31:8080/web/index.jsp");
+		myweb.loadUrl("http://www.soen.kr");
+//		myweb.loadUrl("http://192.168.10.35");
 		
 	}
 	
@@ -74,5 +85,21 @@ public class HybridWebActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btnWeb80:
+			myweb.loadUrl("http://192.168.10.31");
+			break;
+		case R.id.btnWeb8080:
+			myweb.loadUrl("http://192.168.10.31:8080/web");
+			break;	
+
+		default:
+			break;
+		}
+		
 	}
 }
